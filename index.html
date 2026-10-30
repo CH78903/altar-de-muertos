@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altar de Muertos</title>
+    <style>
+        /* Diseño general de la página */
+        body {
+            background-color: #2c003e; /* Morado oscuro */
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            overflow-x: hidden; /* Evita que la pantalla se mueva a los lados */
+        }
+
+        h1 {
+            color: #ff9900; /* Naranja Cempasúchil */
+            text-shadow: 2px 2px 4px #000000;
+            margin-top: 30px;
+            font-size: 2.5rem;
+        }
+
+        /* Estructura del Altar (Flexbox) */
+        .altar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .nivel {
+            background-color: #8b4513; /* Color madera */
+            border-top: 5px solid #ff9900;
+            border-bottom: 2px solid #3e1f08;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.6);
+        }
+
+        /* Tamaños de los escalones para hacer la pirámide */
+        .n1 { width: 40%; max-width: 300px; z-index: 3; }
+        .n2 { width: 60%; max-width: 500px; z-index: 2; }
+        .n3 { width: 80%; max-width: 700px; z-index: 1; }
+        
+        /* Ofrendas */
+        .item {
+            font-size: 3rem;
+            margin: 0 20px;
+            filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.5));
+        }
+
+        /* Animación para el fuego de las velas */
+        .vela {
+            animation: parpadeo 0.8s infinite alternate;
+        }
+        @keyframes parpadeo {
+            from { filter: drop-shadow(0 0 5px #ffcc00); transform: scale(1); }
+            to { filter: drop-shadow(0 0 20px #ff6600); transform: scale(1.05); }
+        }
+
+        /* Animación de la lluvia de cempasúchil */
+        .petalo {
+            position: fixed;
+            top: -10%;
+            font-size: 1.5rem;
+            pointer-events: none; /* Deja hacer clic a través de los pétalos */
+            animation: caer linear infinite;
+            z-index: 100;
+        }
+        @keyframes caer {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>💀 Mi Ofrenda Tradicional 💀</h1>
+    <p>Altar animado de 3 niveles</p>
+
+    <!-- Contenedor principal del altar -->
+    <div class="altar-container">
+        <!-- Nivel 1: Arriba -->
+        <div class="nivel n1">
+            <span class="item" title="Foto">🖼️</span>
+            <span class="item" title="Cruz">✝️</span>
+        </div>
+        
+        <!-- Nivel 2: En medio -->
+        <div class="nivel n2">
+            <span class="item vela" title="Vela">🕯️</span>
+            <span class="item" title="Pan de Muerto">🍞</span>
+            <span class="item" title="Chocolate">☕</span>
+            <span class="item vela" title="Vela">🕯️</span>
+        </div>
+        
+        <!-- Nivel 3: Abajo -->
+        <div class="nivel n3">
+            <span class="item" title="Flor de Cempasúchil">🌸</span>
+            <span class="item" title="Calaverita de Azúcar">💀</span>
+            <span class="item" title="Comida">🍲</span>
+            <span class="item" title="Calaverita de Azúcar">💀</span>
+            <span class="item" title="Flor de Cempasúchil">🌸</span>
+        </div>
+    </div>
+
+    <!-- Script de JavaScript para crear la lluvia de pétalos -->
+    <script>
+        // Función que genera pétalos cada 300 milisegundos
+        setInterval(() => {
+            const petalo = document.createElement('div');
+            petalo.classList.add('petalo');
+            petalo.innerText = '🌸';
+            
+            // Posición horizontal aleatoria
+            petalo.style.left = Math.random() * 100 + 'vw';
+            
+            // Velocidad de caída aleatoria
+            petalo.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            
+            document.body.appendChild(petalo);
+            
+            // Borrar el pétalo cuando sale de la pantalla para no saturar la memoria
+            setTimeout(() => { 
+                petalo.remove(); 
+            }, 6000);
+        }, 300);
+    </script>
+</body>
+</html>
